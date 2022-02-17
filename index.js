@@ -28,7 +28,15 @@ const exampleMovies = require("./movies");
       "James and the Giant Peach",
     ];
  */
-function getAllMovieTitles() {}
+function getAllMovieTitles(movies) {
+  let setMovieTitles = [];
+  if(movies.length !== 0) {
+    for(let movie of movies) {
+      setMovieTitles.push(movie.title);
+    }
+  }
+  return setMovieTitles;
+}
 
 /**
  * getHighestMetascore()
@@ -41,7 +49,17 @@ function getAllMovieTitles() {}
  *  getHighestMetascore(movies);
  *  //> 96
  */
-function getHighestMetascore() {}
+function getHighestMetascore(movies) {
+  let temp = [], setHighestScore = 0;
+  if(movies.length !== 0) {
+    for(let movie of movies) {
+      temp.push(movie.metascore);
+    }
+    setHighestScore = Math.max(...temp);
+  }
+
+  return setHighestScore;
+}
 
 /**
  * getAverageIMDBRating()
@@ -54,12 +72,23 @@ function getHighestMetascore() {}
  *  getAverageIMDBRating(movies);
  *  //> 7.76
  */
-function getAverageIMDBRating() {}
+function getAverageIMDBRating(movies) {
+  let setIMDBAverage = 0;
+  if(movies.length !== 0) {
+    for(let movie of movies) {
+      setIMDBAverage += parseFloat(movie.imdbRating);
+    }
+    setIMDBAverage = setIMDBAverage/movies.length;
+  }
+
+  return setIMDBAverage;
+}
 
 /**
  * countByRating()
  * -----------------------------
- * Returns an object where the keys are movie ratings and the values are the number of movies in the array with that rating. If the inputted `movies` array is empty, return `{}`.
+ * Returns an object where the keys are movie ratings and the values are the number of movies in the array with that rating. 
+ * If the inputted `movies` array is empty, return `{}`.
  * @param {Object[]} movies - An array of movies. See the `movies.js` file for an example of this array.
  * @returns {Object} An object where keys are movie ratings (e.g. "PG") and the values are how many movies in the array have that rating (e.g. 7).
  *
@@ -67,12 +96,50 @@ function getAverageIMDBRating() {}
  *  countByRating(movies);
  *  //> { G: 3, PG: 7 }
  */
-function countByRating() {}
+function countByRating(movies) {
+  let setCountByRating = {};
+  if(movies.length !== 0) {
+    // for(let movie of movies) {
+    //   setCountByRating[movie.rated] = movies.filter((obj) => obj.rated === movie.rated).length;
+    // let counter = 0;
+    // for (let movie of movies) {
+    //   if (movie.rated === movie.rated) {
+    //     counter++;
+    //   }
+    // }
+      //let counter = 0;
+      // for (const obj of storage) {
+      //   if (obj.status === '0') {counter++;}
+      // }
+    //   setCountByRating.movie.rated = movies.filter((obj) => obj.rated === movie.rated).length;
+      // movies.forEach(element => {
+      //   count[element] = (count[element] || 0) + 1;
+      // });
+      //const count = {};
+
+      // movies.forEach(element => {
+      //   setCountByRating[element] = (setCountByRating[element] || 0) + 1;
+      // })
+      // const coun = movies.filter(item => item.rated === item.rated).length;
+      // console.log(coun)
+    //   var result = movies.reduce( (acc, o) => (acc[o.name] = (acc[o.name] || 0)+1, acc), {} );
+
+
+      for (let movie of movies) {
+        setCountByRating[movie.rated] = movies.filter((obj) => obj.rated === obj.rated).length;
+      
+      }
+    
+
+    }
+  return setCountByRating;
+}
 
 /**
  * findById()
  * -----------------------------
- * Returns a movie object from an array of objects based on the ID. If the inputted `movies` array is empty or the ID does not match any movie, return `null`.
+ * Returns a movie object from an array of objects based on the ID. If the inputted `movies` array is empty or 
+ * the ID does not match any movie, return `null`.
  * @param {Object[]} movies - An array of movies. See the `movies.js` file for an example of this array.
  * @param {string} id - A unique `imdbID`.
  * @returns {Object|null} The movie object with the matching `imdbID`.
@@ -83,12 +150,27 @@ function countByRating() {}
       // Toy Story 4
     };
  */
-function findById() {}
+function findById(movies, id) {
+  let setMovieById = {};
+  if(movies.length !== 0) {
+    for (let i = 0; i < movies.length; i++) {
+      if (movies[i].imdbID === id) {
+        setMovieById = movies[i];
+        break;
+      }else{
+        setMovieById = null
+      }
+    }
+  }else{ setMovieById = null}
+
+  return setMovieById;
+}
 
 /**
  * filterByGenre()
  * -----------------------------
- * Returns all movie objects with a matching genre. Case-insensitive. If the inputted `movies` array is empty or no movies match the inputted `genre`, return `[]`.
+ * Returns all movie objects with a matching genre. Case-insensitive. If the inputted `movies` array is empty or no movies match the inputted `genre`, 
+ * return `[]`.
  * @param {Object[]} movies - An array of movies. See the `movies.js` file for an example of this array.
  * @param {string} genre - The genre of a movie. (e.g. "Fantasy")
  * @returns {Object[]} An array of movies where at least one of the genres matches the `genre` inputted.
@@ -105,7 +187,28 @@ function findById() {}
  *  filterByGenre(movies, "Horror")
  *  //> []
  */
-function filterByGenre() {}
+function filterByGenre(movies, genre) {
+  let setMovieByGenre = [];
+  //console.log(movies.filter(movie => movie.imdbID === id))
+  if(movies.length !== 0) {
+    for(let movie of movies) {
+
+      if(movie.genre.includes(genre.toLowerCase())){
+        setMovieByGenre.push(movie)
+      }
+
+      //setMovieByGenre.push(movies.filter(movie => movie.genre === genre));
+      // if(setMovieById){
+      //   setMovieById = null  
+      // }
+      //console.log(setMovieById)
+    }
+    
+  }//else{ setMovieById = null}
+
+
+  return setMovieByGenre;
+}
 
 /**
  * getAllMoviesReleasedAtOrBeforeYear()
@@ -129,7 +232,15 @@ function filterByGenre() {}
       }
     ];
  */
-function getAllMoviesReleasedAtOrBeforeYear() {}
+function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
+  let setMoviesByYear = [];
+  for(let movie of movies) {
+    
+  }
+  setMoviesByYear.push(movies.filter(movie => movie.released.slice(7) <= year));
+
+  return setMoviesByYear;
+}
 
 /**
  * getBiggestBoxOfficeMovie()
@@ -142,7 +253,24 @@ function getAllMoviesReleasedAtOrBeforeYear() {}
  *  getBiggestBoxOfficeMovie(movies);
  *  //> "Incredibles 2"
  */
-function getBiggestBoxOfficeMovie() {}
+function getBiggestBoxOfficeMovie(movies) {
+  let temp = [], setMovieBiggestBox = {};
+
+  if(movies.length !== 0) {
+    for(let movie of movies) {
+
+      temp.push(movie.boxOffice)
+      //parseInt(movie.boxOffice.replaceAll('.','')).substring(1)
+      // if(movie.genre.includes(genre.toLowerCase())){
+      //   setMovieByGenre.push(movie)
+      // }
+      console.log(temp)
+      console.log(movies.filter(e => e.boxOffice === Math.max(temp)))
+      setMovieBiggestBox = movies.filter(e => e.boxOffice === Math.max(temp));
+    }
+  }
+  return setMovieBiggestBox.title;
+}
 
 // Do not change anything below this line.
 module.exports = {

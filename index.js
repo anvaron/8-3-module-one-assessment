@@ -99,38 +99,10 @@ function getAverageIMDBRating(movies) {
 function countByRating(movies) {
   let setCountByRating = {};
   if(movies.length !== 0) {
-    // for(let movie of movies) {
-    //   setCountByRating[movie.rated] = movies.filter((obj) => obj.rated === movie.rated).length;
-    // let counter = 0;
-    // for (let movie of movies) {
-    //   if (movie.rated === movie.rated) {
-    //     counter++;
-    //   }
-    // }
-      //let counter = 0;
-      // for (const obj of storage) {
-      //   if (obj.status === '0') {counter++;}
-      // }
-    //   setCountByRating.movie.rated = movies.filter((obj) => obj.rated === movie.rated).length;
-      // movies.forEach(element => {
-      //   count[element] = (count[element] || 0) + 1;
-      // });
-      //const count = {};
-
-      // movies.forEach(element => {
-      //   setCountByRating[element] = (setCountByRating[element] || 0) + 1;
-      // })
-      // const coun = movies.filter(item => item.rated === item.rated).length;
-      // console.log(coun)
-    //   var result = movies.reduce( (acc, o) => (acc[o.name] = (acc[o.name] || 0)+1, acc), {} );
-
-
       for (let movie of movies) {
         setCountByRating[movie.rated] = movies.filter((obj) => obj.rated === obj.rated).length;
       
       }
-    
-
     }
   return setCountByRating;
 }
@@ -196,16 +168,9 @@ function filterByGenre(movies, genre) {
       if(movie.genre.includes(genre.toLowerCase())){
         setMovieByGenre.push(movie)
       }
-
-      //setMovieByGenre.push(movies.filter(movie => movie.genre === genre));
-      // if(setMovieById){
-      //   setMovieById = null  
-      // }
-      //console.log(setMovieById)
     }
     
   }//else{ setMovieById = null}
-
 
   return setMovieByGenre;
 }
@@ -233,12 +198,11 @@ function filterByGenre(movies, genre) {
     ];
  */
 function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
-  let setMoviesByYear = [];
-  for(let movie of movies) {
-    
+  let temp = {}, setMoviesByYear = [];
+  temp = movies.filter(movie => movie.released.slice(7) <= year) 
+  for(let i of temp) {
+    setMoviesByYear.push(i) 
   }
-  setMoviesByYear.push(movies.filter(movie => movie.released.slice(7) <= year));
-
   return setMoviesByYear;
 }
 
@@ -255,11 +219,11 @@ function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
  */
 function getBiggestBoxOfficeMovie(movies) {
   let temp = [], setMovieBiggestBox = {};
-
+  
   if(movies.length !== 0) {
     for(let movie of movies) {
-
-      temp.push(movie.boxOffice)
+      let i = movie.boxOffice.replaceAll('.','').substring(1)
+      temp.push(i)
       //parseInt(movie.boxOffice.replaceAll('.','')).substring(1)
       // if(movie.genre.includes(genre.toLowerCase())){
       //   setMovieByGenre.push(movie)

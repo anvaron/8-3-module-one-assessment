@@ -57,8 +57,19 @@ function getHighestMetascore(movies) {
     }
     setHighestScore = Math.max(...temp);
   }
-
   return setHighestScore;
+  ///////////////////////
+  // let result = 0;
+  // if(movies.length !== 0){
+  //   result = movies[0];
+  //   for(let i = 1; i < movies.length; i++){
+  //     if(movies[i].metascore > result.metascore){
+  //       result = movies[i]
+  //     }
+  //   }
+  //   result = parseInt(result.metascore);
+  // }
+  // return result;
 }
 
 /**
@@ -80,7 +91,6 @@ function getAverageIMDBRating(movies) {
     }
     setIMDBAverage = setIMDBAverage/movies.length;
   }
-
   return setIMDBAverage;
 }
 
@@ -99,11 +109,10 @@ function getAverageIMDBRating(movies) {
 function countByRating(movies) {
   let setCountByRating = {};
   if(movies.length !== 0) {
-      for (let movie of movies) {
-        setCountByRating[movie.rated] = movies.filter((obj) => obj.rated === obj.rated).length;
-      
-      }
+    for (let movie of movies) {
+      setCountByRating[movie.rated] = movies.filter((obj) => obj.rated === movie.rated).length;
     }
+  }
   return setCountByRating;
 }
 
@@ -123,8 +132,9 @@ function countByRating(movies) {
     };
  */
 function findById(movies, id) {
-  let setMovieById = {};
+  let setMovieById = null;
   if(movies.length !== 0) {
+    setMovieById = {}
     for (let i = 0; i < movies.length; i++) {
       if (movies[i].imdbID === id) {
         setMovieById = movies[i];
@@ -133,8 +143,7 @@ function findById(movies, id) {
         setMovieById = null
       }
     }
-  }else{ setMovieById = null}
-
+  }
   return setMovieById;
 }
 
@@ -161,17 +170,13 @@ function findById(movies, id) {
  */
 function filterByGenre(movies, genre) {
   let setMovieByGenre = [];
-  //console.log(movies.filter(movie => movie.imdbID === id))
   if(movies.length !== 0) {
     for(let movie of movies) {
-
-      if(movie.genre.includes(genre.toLowerCase())){
+      if((movie.genre.toLowerCase()).includes(genre.toLowerCase())) {
         setMovieByGenre.push(movie)
       }
     }
-    
-  }//else{ setMovieById = null}
-
+  }
   return setMovieByGenre;
 }
 
@@ -199,7 +204,7 @@ function filterByGenre(movies, genre) {
  */
 function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
   let temp = {}, setMoviesByYear = [];
-  temp = movies.filter(movie => movie.released.slice(7) <= year) 
+  temp = movies.filter(movie => movie.released.substring(movie.released.length - 4) <= year) 
   for(let i of temp) {
     setMoviesByYear.push(i) 
   }
@@ -218,22 +223,19 @@ function getAllMoviesReleasedAtOrBeforeYear(movies, year) {
  *  //> "Incredibles 2"
  */
 function getBiggestBoxOfficeMovie(movies) {
-  let temp = [], setMovieBiggestBox = {};
-  
-  if(movies.length !== 0) {
-    for(let movie of movies) {
-      let i = movie.boxOffice.replaceAll('.','').substring(1)
-      temp.push(i)
-      //parseInt(movie.boxOffice.replaceAll('.','')).substring(1)
-      // if(movie.genre.includes(genre.toLowerCase())){
-      //   setMovieByGenre.push(movie)
-      // }
-      console.log(temp)
-      console.log(movies.filter(e => e.boxOffice === Math.max(temp)))
-      setMovieBiggestBox = movies.filter(e => e.boxOffice === Math.max(temp));
+  let setBiggestOffice = null,
+      parseNumber = (num) => parseInt((num.replaceAll(',','')).substring(1));
+
+  if(movies.length !== 0){
+    setBiggestOffice = movies[0];
+    for(let i = 1; i < movies.length; i++){
+      if(parseNumber(movies[i].boxOffice) >= parseNumber(setBiggestOffice.boxOffice)){
+        setBiggestOffice = movies[i];  
+      }
     }
+    setBiggestOffice = setBiggestOffice.title;
   }
-  return setMovieBiggestBox.title;
+  return setBiggestOffice;
 }
 
 // Do not change anything below this line.
